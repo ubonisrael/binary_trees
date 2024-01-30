@@ -69,7 +69,7 @@ static size_t _height(const binary_tree_t *tree)
 void binary_tree_print(const binary_tree_t *tree)
 {
 	char **s;
-	size_t height, i, j;
+	int height, i, j;
 
 	if (!tree)
 		return;
