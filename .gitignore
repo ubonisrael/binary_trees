@@ -1,2 +1,8 @@
-binary_tree_print.c
+!main_files/*.c
+*
+!README.md
 *-main.c
+!/*binary*.c
+!/*.h
+!/.gitignore
+!README.md
