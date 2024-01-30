@@ -1,6 +1,6 @@
 #include "binary_trees.h"
 
-binary_tree_t **create_queue(binary_tree_t *tree);
+binary_tree_t **create_queue(void);
 void add_to_queue(binary_tree_t **queue, binary_tree_t *node, int *pos);
 binary_tree_t *pop_queue(binary_tree_t **queue, int *pos);
 /**
@@ -14,17 +14,16 @@ binary_tree_t *pop_queue(binary_tree_t **queue, int *pos);
 void binary_tree_levelorder(binary_tree_t *tree, void (*func)(int))
 {
 	binary_tree_t **queue;
-	binary_tree_t *tmp;
+	binary_tree_t *tmp = tree;
 	int front, rear;
 
 	if (tree == NULL)
 		return;
-	queue = create_queue(tree);
+	queue = create_queue();
 	if (queue == NULL)
 		return;
 	front = rear = 0;
-	tmp = tree;
-	while (tmp && front <= rear)
+	while (tmp != NULL && front <= rear)
 	{
 		func(tmp->n);
 
@@ -40,20 +39,19 @@ void binary_tree_levelorder(binary_tree_t *tree, void (*func)(int))
 
 /**
   * create_queue - creates a queue for storing nodes in a binary tree
-  * @tree:  pointer to binary tree
   * Return: the pointer to the create queue if successful, else NULL
   */
 
-binary_tree_t **create_queue(binary_tree_t *tree)
+binary_tree_t **create_queue(void)
 {
 	binary_tree_t **queue;
-	int height;
+	int i;
 
-	height = binary_tree_height(tree);
-	queue = malloc(sizeof(binary_tree_t *) * (height + 1));
-
+	queue = malloc(sizeof(binary_tree_t *) * 512);
 	if (queue == NULL)
 		return (NULL);
+	for (i = 0; i < 512; i++)
+		queue[i] = NULL;
 	return (queue);
 }
 
