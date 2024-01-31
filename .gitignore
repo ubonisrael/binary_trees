@@ -3,6 +3,7 @@
 !README.md
 *-main.c
 !/*binary*.c
+!/*bst*.c
 !/*.h
 !/.gitignore
 !README.md
