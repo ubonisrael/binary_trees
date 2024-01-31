@@ -1,6 +1,21 @@
 #include "binary_trees.h"
-void _binary_tree_delete(binary_tree_t *tree);
 
+
+/**
+ * b_delete - deletes an entire binary tr
+ * @tr: is a pointer to the root node of the tr to delete
+ * Return: void
+ */
+void b_delete(binary_tree_t *tr)
+{
+	if (tr == NULL)
+		return;
+	if (tr->left != NULL)
+		binary_tree_delete(tr->left);
+	if (tr->right != NULL)
+		binary_tree_delete(tr->right);
+	free(tr);
+}
 /**
  * array_to_bst - Builds a Binary Search Tree (BST) from an array
  * @array: Pointer to the first element of the array to be converted
@@ -24,26 +39,9 @@ bst_t *array_to_bst(int *array, size_t size)
 		if (!inserted)
 		{
 			/* ..delete the already created nodes and return NULL */
-			_binary_tree_delete(root);
+			b_delete(root);
 			return (NULL);
 		}
 	}
 	return (root);
-}
-
-/**
- * _binary_tree_delete - deletes an entire binary tree
- * @tree: is a pointer to the root node of the tree to delete
- * Return: void
- */
-
-void _binary_tree_delete(binary_tree_t *tree)
-{
-	if (tree == NULL)
-		return;
-	if (tree->left != NULL)
-		binary_tree_delete(tree->left);
-	if (tree->right != NULL)
-		binary_tree_delete(tree->right);
-	free(tree);
 }

@@ -7,15 +7,12 @@
  */
 int binary_tree_is_bst(const binary_tree_t *tree)
 {
-	int max_val, min_val;
 
 	if (!tree)
 		return (0);
 
-	min_val = bst_min_value(tree);
-	max_val = bst_max_value(tree);
 
-	return (is_bst_util(tree, min_val, max_val));
+	return (is_bst_util(tree, INT_MIN, INT_MAX));
 }
 
 /**

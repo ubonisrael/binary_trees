@@ -28,6 +28,7 @@ typedef struct binary_tree_s bst_t;
 typedef struct binary_tree_s avl_t;
 typedef struct binary_tree_s heap_t;
 
+void b_delete(binary_tree_t *tr);
 /* ---- MAIN FUNCTIONS ---- */
 	/* task 0 to 8 */
 void binary_tree_print(const binary_tree_t *tree);
@@ -60,7 +61,8 @@ binary_tree_t *binary_tree_sibling(binary_tree_t *node);
 binary_tree_t *binary_tree_uncle(binary_tree_t *node);
 binary_tree_t *_binary_tree_sibling(binary_tree_t *node);
 
-binary_tree_t *binary_trees_ancestor(const binary_tree_t *first, const binary_tree_t *second);
+binary_tree_t *binary_trees_ancestor(
+		const binary_tree_t *first, const binary_tree_t *second);
 void binary_tree_levelorder(binary_tree_t *tree, void (*func)(int));
 int binary_tree_is_complete(binary_tree_t *tree);
 
@@ -74,7 +76,6 @@ bst_t *bst_search(const bst_t *tree, int value);
 
 /* --------- HELPER FUNCTIONS ----------- */
 size_t _binary_tree_height(const binary_tree_t *tree);
-void _binary_tree_delete(binary_tree_t *tree);
 
 int bst_max_value(const binary_tree_t *tree);
 int bst_min_value(const binary_tree_t *tree);
