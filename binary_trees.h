@@ -76,6 +76,7 @@ bst_t *bst_remove(bst_t *root, int value);
 /* --------- HELPER FUNCTIONS ----------- */
 size_t _binary_tree_height(const binary_tree_t *tree);
 void b_delete(binary_tree_t *tr);
+int is_duplicated(int *array, int value, size_t size);
 
 int bst_max_value(const binary_tree_t *tree);
 int bst_min_value(const binary_tree_t *tree);
