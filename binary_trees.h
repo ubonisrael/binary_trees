@@ -121,6 +121,8 @@ int bst_max_value(const binary_tree_t *tree);
 int bst_min_value(const binary_tree_t *tree);
 int is_bst_util(const binary_tree_t *tree, int min, int max);
 
+binary_tree_t *_balance_tree(binary_tree_t *tree, binary_tree_t *tree_parent);
+
 int enqueue(queue_t **front, queue_t **rear, heap_t *node);
 heap_t *dequeue(queue_t **front);
 void free_queues(queue_t **front);

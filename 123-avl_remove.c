@@ -56,9 +56,8 @@ void set_parent_node(binary_tree_t *node, binary_tree_t *new_node)
 
 avl_t *avl_remove(avl_t *root, int value)
 {
-	avl_t *node, *tmp;
+	avl_t *node = root, *tmp;
 
-	node = root;
 	if (node == NULL)
 		return (NULL);
 	if (value < node->n)
@@ -66,8 +65,6 @@ avl_t *avl_remove(avl_t *root, int value)
 	if (value > node->n)
 		return (avl_remove(node->right, value));
 
-	/* at this stage, it means it is the current node */
-	/* that needs to be removed */
 	if (node->left == NULL && node->right == NULL)
 	{
 		tmp = node->parent;
@@ -76,26 +73,20 @@ avl_t *avl_remove(avl_t *root, int value)
 		return (_check_avl(tmp));
 	}
 	if (node->left != NULL && node->right == NULL)
-	{
 		tmp = node->left;
-		tmp->parent = node->parent;
-	}
 	if (node->left == NULL && node->right == NULL)
-	{
 		tmp = node->right;
-		tmp->parent = node->parent;
-	}
 	if (node->left != NULL && node->right != NULL)
 	{
 		tmp = find_min(node->right, node->right);
 		set_parent_node(tmp, NULL);
-		tmp->parent = node->parent;
 		tmp->left = node->left;
 		tmp->right = node->right;
 		node->left->parent = tmp;
 		if (node->right != NULL)
 			node->right->parent = tmp;
 	}
+	tmp->parent = node->parent;
 	set_parent_node(node, tmp);
 	free(node);
 	return (_check_avl(tmp));
@@ -127,62 +118,7 @@ avl_t *_check_avl(binary_tree_t *node)
 	return (tmp2);
 }
 
-/**
- * _balance_tree - rotates a node left or right to balance an unbalanced AVL
- * @tree: pointer to node to apply rotation
- * @tree_parent: pointer to node to tree's parent
- * Return: pointer to new root
- */
 
-binary_tree_t *_balance_tree(binary_tree_t *tree, binary_tree_t *tree_parent)
-{
-	int lh, rh;
-	binary_tree_t *new_root;
-
-	lh = rh = 0;
-	if (tree->left)
-		lh = _binary_tree_height(tree->left) + 1;
-	if (tree->right)
-		rh = _binary_tree_height(tree->right) + 1;
-	if (rh > lh)
-	{
-		if (binary_tree_balance(tree->right) <= 0)
-		{
-			new_root = binary_tree_rotate_left(tree);
-		}
-		else
-		{
-			new_root = binary_tree_rotate_right(tree->right);
-			tree->right = new_root;
-			new_root = binary_tree_rotate_left(tree);
-		}
-	}
-	else
-	{
-		if (binary_tree_balance(tree->left) >= 0)
-		{
-			new_root = binary_tree_rotate_right(tree);
-		}
-		else
-		{
-			new_root = binary_tree_rotate_left(tree->left);
-			tree->left = new_root;
-			new_root = binary_tree_rotate_right(tree);
-		}
-	}
-	if (tree_parent)
-	{
-		if (new_root->n > (tree_parent)->n)
-			(tree_parent)->right = new_root;
-		else
-			(tree_parent)->left = new_root;
-		new_root->parent = (tree_parent);
-	}
-	else
-		new_root->parent = tree_parent;
-	tree = new_root;
-	return (tree);
-}
 
 /**
  * _is_avl_util - helper function to check if a binary tree is a valid AVL
