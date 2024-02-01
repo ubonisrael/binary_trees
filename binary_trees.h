@@ -28,7 +28,6 @@ typedef struct binary_tree_s bst_t;
 typedef struct binary_tree_s avl_t;
 typedef struct binary_tree_s heap_t;
 
-void b_delete(binary_tree_t *tr);
 /* ---- MAIN FUNCTIONS ---- */
 	/* task 0 to 8 */
 void binary_tree_print(const binary_tree_t *tree);
@@ -69,10 +68,15 @@ int binary_tree_is_complete(binary_tree_t *tree);
 binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);
 binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
 
+/* --------- BINARY SEARCH TREE FUNCTIONS ----------- */
 int binary_tree_is_bst(const binary_tree_t *tree);
 bst_t *bst_insert(bst_t **tree, int value);
 bst_t *array_to_bst(int *array, size_t size);
 bst_t *bst_search(const bst_t *tree, int value);
+bst_t *bst_remove(bst_t *root, int value);
+
+/* --------- MAX BINARY HEAP FUNCTIONS ----------- */
+int binary_tree_is_heap(const binary_tree_t *tree);
 
 /* AVL  FUnctions */
 int binary_tree_is_avl(const binary_tree_t *tree);
@@ -81,6 +85,9 @@ avl_t *array_to_avl(int *array, size_t size);
 
 /* --------- HELPER FUNCTIONS ----------- */
 size_t _binary_tree_height(const binary_tree_t *tree);
+void b_delete(binary_tree_t *tr);
+int is_duplicated(int *array, int value, size_t size);
+int is_max_heap(const binary_tree_t *tree);
 
 int bst_max_value(const binary_tree_t *tree);
 int bst_min_value(const binary_tree_t *tree);

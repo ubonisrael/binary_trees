@@ -32,6 +32,18 @@ int is_bst_util(const binary_tree_t *tree, int min, int max)
 	if (tree->n <= min || tree->n >= max)
 		return (0);
 
+	/* added case for duplicate values */
+	if (tree->left && tree->left->n == tree->n)
+		return (0);
+	if (tree->right && tree->right->n == tree->n)
+		return (0);
+
+	/* added case for duplicate values */
+	if (tree->left && tree->left->n == tree->n)
+		return (0);
+	if (tree->right && tree->right->n == tree->n)
+		return (0);
+
 	l_is_vld = is_bst_util(tree->left, min, tree->n);
 	r_is_vld = is_bst_util(tree->right, tree->n, max);
 

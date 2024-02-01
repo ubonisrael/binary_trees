@@ -6,5 +6,6 @@
 !/*bst*.c
 !/*avl*.c
 !/*.h
+!/*-O
 !/.gitignore
 !README.md
