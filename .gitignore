@@ -7,5 +7,7 @@
 !/*avl*.c
 !/*.h
 !/*-O
+!/*heap*.c
+*save.c
 !/.gitignore
 !README.md
