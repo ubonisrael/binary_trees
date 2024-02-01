@@ -4,6 +4,7 @@
 *-main.c
 !/*binary*.c
 !/*bst*.c
+!/*avl*.c
 !/*.h
 !/.gitignore
 !README.md

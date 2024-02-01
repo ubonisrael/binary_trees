@@ -74,6 +74,11 @@ bst_t *bst_insert(bst_t **tree, int value);
 bst_t *array_to_bst(int *array, size_t size);
 bst_t *bst_search(const bst_t *tree, int value);
 
+/* AVL  FUnctions */
+int binary_tree_is_avl(const binary_tree_t *tree);
+avl_t *avl_insert(avl_t **tree, int value);
+avl_t *array_to_avl(int *array, size_t size);
+
 /* --------- HELPER FUNCTIONS ----------- */
 size_t _binary_tree_height(const binary_tree_t *tree);
 
