@@ -1,9 +1,10 @@
 #include "binary_trees.h"
 
 binary_tree_t *balance_tree(binary_tree_t *tree, binary_tree_t *tree_parent);
-binary_tree_t *check_avl(binary_tree_t *node);
+avl_t *check_avl(binary_tree_t *node);
 int is_avl_util(const binary_tree_t *tree, int min, int max);
 int _binary_tree_is_avl(const binary_tree_t *tree);
+avl_t *_avl_insert_util(avl_t **tree, int value, avl_t **root);
 
 /**
  * avl_insert - inserts a value in an AVL Tree
@@ -14,7 +15,21 @@ int _binary_tree_is_avl(const binary_tree_t *tree);
 
 avl_t *avl_insert(avl_t **tree, int value)
 {
-	binary_tree_t *node, *tmp;
+	return (_avl_insert_util(tree, value, tree));
+}
+
+/**
+ * _avl_insert_util - inserts a value in an AVL Tree
+ * @tree: double pointer to root of the AVL for inserting value
+ * @value: value to store in newly created node
+ * @root: double pointer to original root of the AVL for inserting value
+ * Return: pointer to newly created node or NULL if successful
+ */
+
+avl_t *_avl_insert_util(avl_t **tree, int value, avl_t **root)
+{
+	binary_tree_t *node;
+	avl_t *tmp;
 
 	if ((*tree) == NULL)
 	{
@@ -31,9 +46,13 @@ avl_t *avl_insert(avl_t **tree, int value)
 			node = binary_tree_node((*tree), value);
 			(*tree)->left = node;
 			tmp = check_avl(node);
+			if (tmp->parent == NULL)
+			{
+				*root = tmp;
+			}
 			return (node);
 		}
-		return (avl_insert(&(*tree)->left, value));
+		return (_avl_insert_util(&(*tree)->left, value, root));
 	}
 
 	if ((*tree)->right == NULL)
@@ -41,11 +60,13 @@ avl_t *avl_insert(avl_t **tree, int value)
 		node = binary_tree_node((*tree), value);
 		(*tree)->right = node;
 		tmp = check_avl(node);
-		tree = &tmp;
-		binary_tree_print(*tree);
+		if (tmp->parent == NULL)
+		{
+			*root = tmp;
+		}
 		return (node);
 	}
-	return (avl_insert(&(*tree)->right, value));
+	return (_avl_insert_util(&(*tree)->right, value, root));
 }
 
 /**
@@ -55,7 +76,7 @@ avl_t *avl_insert(avl_t **tree, int value)
  * Return: pointer to new root node
  */
 
-binary_tree_t *check_avl(binary_tree_t *node)
+avl_t *check_avl(binary_tree_t *node)
 {
 	binary_tree_t *tmp, *tmp2;
 
@@ -65,7 +86,9 @@ binary_tree_t *check_avl(binary_tree_t *node)
 	while (tmp != NULL)
 	{
 		if (_binary_tree_is_avl(tmp) == 0)
+		{
 			tmp = balance_tree(tmp, tmp->parent);
+		}
 		tmp2 = tmp;
 		tmp = tmp->parent;
 	}
@@ -91,7 +114,7 @@ binary_tree_t *balance_tree(binary_tree_t *tree, binary_tree_t *tree_parent)
 		rh = _binary_tree_height(tree->right) + 1;
 	if (rh > lh)
 	{
-		if (tree->right->right && lh == 0)
+		if (binary_tree_balance(tree->right) <= 0)
 		{
 			new_root = binary_tree_rotate_left(tree);
 		}
@@ -104,7 +127,7 @@ binary_tree_t *balance_tree(binary_tree_t *tree, binary_tree_t *tree_parent)
 	}
 	else
 	{
-		if (tree->left->left && rh == 0)
+		if (binary_tree_balance(tree->left) >= 0)
 		{
 			new_root = binary_tree_rotate_right(tree);
 		}
@@ -157,7 +180,7 @@ int is_avl_util(const binary_tree_t *tree, int min, int max)
 }
 
 /**
- * binary_tree_is_avl - checks if a binary tree is a valid AVL tree
+ * _binary_tree_is_avl - checks if a binary tree is a valid AVL tree
  * @tree: pointer to the root node of the tree
  * Return: 1 if true, else 0
  */

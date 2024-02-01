@@ -78,7 +78,7 @@ int is_avl_util(const binary_tree_t *tree, int min, int max)
 	if (tree->n <= min || tree->n >= max)
 		return (0);
 
-    bal = binary_tree_balance(tree);
+	bal = binary_tree_balance(tree);
 	if (bal < -1 || bal > 1)
 		return (0);
 
@@ -99,5 +99,5 @@ int binary_tree_is_avl(const binary_tree_t *tree)
 	if (tree == NULL)
 		return (0);
 
-	return(is_avl_util(tree, INT_MIN, INT_MAX));
+	return (is_avl_util(tree, INT_MIN, INT_MAX));
 }
