@@ -1,7 +1,5 @@
 #include "binary_trees.h"
 
-
-
 /**
  * get_last_node - finds the last node in the last level of the heap
  * @root: double pointer to the root node of heap
@@ -13,30 +11,30 @@ heap_t *get_last_node(heap_t *root)
 	queue_t *front = NULL, *rear = NULL;
 	heap_t *last_node = NULL;
 
-	/*use level order traversal to find the last node*/
 	if (!root)
 		return (NULL);
 
 	enqueue(&front, &rear, root);
+
 	while (front)
 	{
 		last_node = dequeue(&front);
 
-		if (last_node->left)
+		if (last_node && last_node->left)
 			enqueue(&front, &rear, last_node->left);
-		if (last_node->right)
+		if (last_node && last_node->right)
 			enqueue(&front, &rear, last_node->right);
 	}
 
 	return (last_node);
 }
 /**
- * heapify_down - restores the Max Heap ordering after extraction
+ * heapify_down - restores the MH ordering after extraction
  * @root: pointer to the root of the heap
  */
 void heapify_down(heap_t *root)
 {
-	heap_t *largest = root, *right, left;
+	heap_t *largest = root, *right, *left;
 
 	if (!root)
 		return;
@@ -44,15 +42,12 @@ void heapify_down(heap_t *root)
 	right = root->right;
 	left = root->left;
 
-	/*find the largest among root, left child, and right child*/
 	if (left && left->n > largest->n)
 		largest = left;
 
 	if (right && right->n > largest->n)
 		largest = right;
 
-	/*if the largest is not the root, swap values and*/
-	/*recursively heapify_down*/
 	if (largest != root)
 	{
 		swap_values(&root->n, &largest->n);
@@ -68,10 +63,10 @@ void heapify_down(heap_t *root)
  */
 int heap_extract(heap_t **root)
 {
-	heap_t *last_node, parent;
+	heap_t *last_node, *parent;
 	int root_value;
 
-	if (!root || !*root)
+	if (!root || !(*root))
 		return (0);
 
 	last_node = get_last_node(*root);
@@ -84,13 +79,12 @@ int heap_extract(heap_t **root)
 		return (root_value);
 	}
 
-	/*replace root with last_node*/
+	/*replace root's value with last_node's value*/
 	(*root)->n = last_node->n;
 
-	/*find parent of last_node*/
 	parent = last_node->parent;
 
-	/*remove last_node from its parent*/
+	/*detach last_node from its parent*/
 	if (parent->left == last_node)
 		parent->left = NULL;
 	else
@@ -98,7 +92,7 @@ int heap_extract(heap_t **root)
 
 	free(last_node);
 
-	/*rebuild the max heap*/
+	/* rebuild the max heap */
 	heapify_down(*root);
 
 	return (root_value);
