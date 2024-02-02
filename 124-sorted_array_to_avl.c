@@ -32,16 +32,15 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
 avl_t *create_sort_arr_util(avl_t *tree, binary_tree_t *parent_node,
 		int *arr, int start, int end)
 {
-	binary_tree_t *node;
 	int mid;
 
 	if (start > end)
 		return (NULL);
 	mid = (start + end) / 2;
-	node = binary_tree_node(tree, arr[mid]);
-	(tree) = node;
-	node->parent = parent_node;
-	node->left = create_sort_arr_util(node->left, node, arr, start, mid - 1);
-	node->right = create_sort_arr_util(node->right, node, arr, mid + 1, end);
+	tree = binary_tree_node(parent_node, arr[mid]);
+	if (tree == NULL)
+		return (NULL);
+	tree->left = create_sort_arr_util(tree->left, tree, arr, start, mid - 1);
+	tree->right = create_sort_arr_util(tree->right, tree, arr, mid + 1, end);
 	return (tree);
 }
