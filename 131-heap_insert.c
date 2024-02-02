@@ -15,13 +15,17 @@ heap_t *heap_insert(heap_t **root, int value)
 
 	if (!root)
 		return (NULL);
+
 	if (!*root)
 	{
 		*root = binary_tree_node(NULL, value);
 		if (!*root)
+		{
 			free_queues(&front);
+		}
 		return (*root);
 	}
+
 	if (!enqueue(&front, &rear, *root))
 	{
 		free_queues(&front);
@@ -30,6 +34,11 @@ heap_t *heap_insert(heap_t **root, int value)
 	while (front)
 	{
 		current = dequeue(&front);
+		if (value == current->n)
+		{
+			free_queues(&front);
+			return (current);
+		}
 		if (!current->left)
 		{
 			new_node = binary_tree_node(current, value);
@@ -38,8 +47,10 @@ heap_t *heap_insert(heap_t **root, int value)
 				free_queues(&front);
 				return (NULL);
 			}
+
 			current->left = new_node;
-			heapify_up(new_node), free_queues(&front);
+			heapify_up(new_node);
+			free_queues(&front);
 			return (new_node);
 		}
 		else if (!enqueue(&front, &rear, current->left))
@@ -55,6 +66,7 @@ heap_t *heap_insert(heap_t **root, int value)
 				free_queues(&front);
 				return (NULL);
 			}
+
 			current->right = new_node;
 			heapify_up(new_node);
 			free_queues(&front);
@@ -67,8 +79,10 @@ heap_t *heap_insert(heap_t **root, int value)
 		}
 	}
 	free_queues(&front);
+
 	return (NULL);
 }
+
 
 /**
  * enqueue - enqueues a node into the queue
