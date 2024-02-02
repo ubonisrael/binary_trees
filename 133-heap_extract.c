@@ -36,12 +36,13 @@ heap_t *get_last_node(heap_t *root)
  */
 void heapify_down(heap_t *root)
 {
-	heap_t *largest = root;
-	heap_t *left = root->left;
-	heap_t *right = root->right;
+	heap_t *largest = root, *right, left;
 
 	if (!root)
 		return;
+
+	right = root->right;
+	left = root->left;
 
 	/*find the largest among root, left child, and right child*/
 	if (left && left->n > largest->n)
@@ -67,7 +68,7 @@ void heapify_down(heap_t *root)
  */
 int heap_extract(heap_t **root)
 {
-	heap_t *last_node;
+	heap_t *last_node, parent;
 	int root_value;
 
 	if (!root || !*root)
@@ -87,7 +88,7 @@ int heap_extract(heap_t **root)
 	(*root)->n = last_node->n;
 
 	/*find parent of last_node*/
-	heap_t *parent = last_node->parent;
+	parent = last_node->parent;
 
 	/*remove last_node from its parent*/
 	if (parent->left == last_node)
@@ -97,7 +98,7 @@ int heap_extract(heap_t **root)
 
 	free(last_node);
 
-	/*rebuild the Max Heap*/
+	/*rebuild the max heap*/
 	heapify_down(*root);
 
 	return (root_value);
