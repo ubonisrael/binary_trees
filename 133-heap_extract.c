@@ -1,5 +1,39 @@
 #include "binary_trees.h"
+heap_t *_dequeue(queue_t **front);
 int _enqueue(queue_t **front, queue_t **rear, heap_t *node);
+/**
+  * _swap_values - swaps the values of two integers
+  * @a: pointer to the first integer
+  * @b: pointer to the second integer
+  */
+void _swap_values(int *a, int *b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+/**
+ * _dequeue - _dequeues a node from the queue
+ * @front: pointer to the front of the queue
+ *
+ * Return: pointer to the _dequeued node
+ */
+heap_t *_dequeue(queue_t **front)
+{
+	heap_t *node;
+	queue_t *temp;
+
+	if (!*front)
+		return (NULL);
+
+	temp = *front;
+	node = temp->node;
+	*front = (*front)->next;
+	free(temp);
+
+	return (node);
+}
+
 
 /**
  * _enqueue - enqueues a node into the queue
@@ -51,7 +85,7 @@ heap_t *get_last_node(heap_t *root)
 
 	while (front)
 	{
-		last_node = dequeue(&front);
+		last_node = _dequeue(&front);
 
 		if (last_node && last_node->left)
 			_enqueue(&front, &rear, last_node->left);
@@ -83,7 +117,7 @@ void heapify_down(heap_t *root)
 
 	if (largest != root)
 	{
-		swap_values(&root->n, &largest->n);
+		_swap_values(&root->n, &largest->n);
 		heapify_down(largest);
 	}
 }
