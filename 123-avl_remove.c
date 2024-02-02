@@ -81,7 +81,8 @@ avl_t *avl_remove(avl_t *root, int value)
 		tmp = find_min(node->right, node->right);
 		set_parent_node(tmp, NULL);
 		tmp->left = node->left;
-		tmp->right = node->right;
+		if (tmp->right == NULL)
+			tmp->right = node->right;
 		node->left->parent = tmp;
 		if (node->right != NULL)
 			node->right->parent = tmp;
