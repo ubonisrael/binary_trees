@@ -118,8 +118,6 @@ avl_t *_check_avl(binary_tree_t *node)
 	return (tmp2);
 }
 
-
-
 /**
  * _is_avl_util - helper function to check if a binary tree is a valid AVL
  * @tree: pointer to the root node of the tree
@@ -145,4 +143,54 @@ int _is_avl_util(const binary_tree_t *tree, int min, int max)
 	r_is_vld = _is_avl_util(tree->right, tree->n, max);
 
 	return (l_is_vld && r_is_vld);
+}
+
+/**
+ * _balance_tree - rotates a node left or right to balance an unbalanced AVL
+ * @tree: pointer to node to apply rotation
+ * @tree_parent: pointer to node to tree's parent
+ * Return: pointer to new root
+ */
+
+binary_tree_t *_balance_tree(binary_tree_t *tree, binary_tree_t *tree_parent)
+{
+	int lh = 0, rh = 0;
+	binary_tree_t *new_root;
+
+	if (tree->left)
+		lh = _binary_tree_height(tree->left) + 1;
+	if (tree->right)
+		rh = _binary_tree_height(tree->right) + 1;
+	if (rh > lh)
+	{
+		if (binary_tree_balance(tree->right) <= 0)
+			new_root = binary_tree_rotate_left(tree);
+		else
+		{
+			new_root = binary_tree_rotate_right(tree->right);
+			tree->right = new_root;
+			new_root = binary_tree_rotate_left(tree);
+		}
+	}
+	else
+	{
+		if (binary_tree_balance(tree->left) >= 0)
+			new_root = binary_tree_rotate_right(tree);
+		else
+		{
+			new_root = binary_tree_rotate_left(tree->left);
+			tree->left = new_root;
+			new_root = binary_tree_rotate_right(tree);
+		}
+	}
+	if (tree_parent)
+	{
+		if (new_root->n > (tree_parent)->n)
+			(tree_parent)->right = new_root;
+		else
+			(tree_parent)->left = new_root;
+	}
+	new_root->parent = tree_parent;
+	tree = new_root;
+	return (tree);
 }

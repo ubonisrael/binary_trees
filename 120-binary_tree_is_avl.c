@@ -1,6 +1,6 @@
 #include "binary_trees.h"
 
-int binary_tree_balance(const binary_tree_t *tree);
+int _binary_tree_balance(const binary_tree_t *tree);
 size_t _binary_tree_height(const binary_tree_t *tree);
 int is_avl_util(const binary_tree_t *tree, int min, int max);
 /**
@@ -9,7 +9,7 @@ int is_avl_util(const binary_tree_t *tree, int min, int max);
   * @tree: pointer to the root node of the tree
   * Return: 0, If tree is NULL.
   */
-int binary_tree_balance(const binary_tree_t *tree)
+int _binary_tree_balance(const binary_tree_t *tree)
 {
 	size_t lheight = 0, rheight = 0;
 
@@ -78,7 +78,7 @@ int is_avl_util(const binary_tree_t *tree, int min, int max)
 	if (tree->n <= min || tree->n >= max)
 		return (0);
 
-	bal = binary_tree_balance(tree);
+	bal = _binary_tree_balance(tree);
 	if (bal < -1 || bal > 1)
 		return (0);
 
