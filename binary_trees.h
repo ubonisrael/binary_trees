@@ -130,7 +130,7 @@ binary_tree_t *_balance_tree(binary_tree_t *tree, binary_tree_t *tree_parent);
 int enqueue(queue_t **front, queue_t **rear, heap_t *node);
 heap_t *dequeue(queue_t **front);
 void free_queues(queue_t **front);
-void heapify_up(heap_t *node);
+heap_t *heapify_up(heap_t *node);
 void swap_values(int *a, int *b);
 
 heap_t *get_last_node(heap_t *root);

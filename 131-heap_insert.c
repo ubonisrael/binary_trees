@@ -2,27 +2,6 @@
 void power_of_red(void);
 
 /**
-  * binary_tree_node - creates a binary tree node
-  * @parent: is a pointer to the parent node of the node to create
-  * @value: the value to be put in the new node
-  * Return: a pointer to the new node or NULL on failure
-  */
-
-binary_tree_t *binary_tree_node(binary_tree_t *parent, int value)
-{
-	binary_tree_t *new_node = malloc(sizeof(binary_tree_t));
-
-	if (new_node == NULL)
-		return (NULL);
-	new_node->parent = parent;
-	new_node->left = NULL;
-	new_node->right = NULL;
-	new_node->n = value;
-
-	return (new_node);
-}
-
-/**
  * heap_insert - inserts a value in Max Binary Heap
  * @root: double pointer to the root node of the Heap to insert the value
  * @value: the value to store in the node to be inserted
@@ -31,7 +10,7 @@ binary_tree_t *binary_tree_node(binary_tree_t *parent, int value)
  */
 heap_t *heap_insert(heap_t **root, int value)
 {
-	heap_t *new_node, *current;
+	heap_t *new_node, *current, *tmp;
 	queue_t *front = NULL, *rear = NULL;
 
 	if (!root)
@@ -70,9 +49,9 @@ heap_t *heap_insert(heap_t **root, int value)
 			}
 
 			current->left = new_node;
-			heapify_up(new_node);
+			tmp = heapify_up(new_node);
 			free_queues(&front);
-			return (new_node);
+			return (tmp);
 		}
 		else if (!enqueue(&front, &rear, current->left))
 		{
@@ -89,9 +68,9 @@ heap_t *heap_insert(heap_t **root, int value)
 			}
 
 			current->right = new_node;
-			heapify_up(new_node);
+			tmp = heapify_up(new_node);
 			free_queues(&front);
-			return (new_node);
+			return (tmp);
 		}
 		else if (!enqueue(&front, &rear, current->right))
 		{
@@ -163,8 +142,9 @@ heap_t *dequeue(queue_t **front)
 /**
  * heapify_up - restores the Max Heap ordering after insertion
  * @node: pointer to the newly inserted node
+ * Return: pointer to newly inserted node
  */
-void heapify_up(heap_t *node)
+heap_t *heapify_up(heap_t *node)
 {
 	heap_t *current = node;
 
@@ -173,6 +153,7 @@ void heapify_up(heap_t *node)
 		swap_values(&current->n, &current->parent->n);
 		current = current->parent;
 	}
+	return (current);
 }
 
 /**
