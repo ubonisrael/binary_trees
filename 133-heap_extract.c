@@ -1,4 +1,37 @@
 #include "binary_trees.h"
+int _enqueue(queue_t **front, queue_t **rear, heap_t *node);
+
+/**
+ * _enqueue - enqueues a node into the queue
+ * @front: pointer to the front of the queue
+ * @rear: pointer to the rear of the queue
+ * @node: pointer to the node to be enqueued
+ * Return: 1 on success and 0 on failure.
+ */
+int _enqueue(queue_t **front, queue_t **rear, heap_t *node)
+{
+	queue_t *new_node;
+
+	if (!node)
+		return (0);
+	new_node = malloc(sizeof(queue_t));
+	if (!new_node)
+		return (0);
+
+	new_node->node = node;
+	new_node->next = NULL;
+
+	if (!*front)
+	{
+		*front = *rear = new_node;
+	}
+	else
+	{
+		(*rear)->next = new_node;
+		*rear = new_node;
+	}
+	return (1);
+}
 
 /**
  * get_last_node - finds the last node in the last level of the heap
