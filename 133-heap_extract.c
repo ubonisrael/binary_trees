@@ -47,16 +47,16 @@ heap_t *get_last_node(heap_t *root)
 	if (!root)
 		return (NULL);
 
-	enqueue(&front, &rear, root);
+	_enqueue(&front, &rear, root);
 
 	while (front)
 	{
 		last_node = dequeue(&front);
 
 		if (last_node && last_node->left)
-			enqueue(&front, &rear, last_node->left);
+			_enqueue(&front, &rear, last_node->left);
 		if (last_node && last_node->right)
-			enqueue(&front, &rear, last_node->right);
+			_enqueue(&front, &rear, last_node->right);
 	}
 
 	return (last_node);
