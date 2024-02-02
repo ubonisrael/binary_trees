@@ -10,12 +10,12 @@
  */
 heap_t *get_last_node(heap_t *root)
 {
-	if (!root)
-		return (NULL);
-
-	/*use level order traversal to find the last node*/
 	queue_t *front = NULL, *rear = NULL;
 	heap_t *last_node = NULL;
+
+	/*use level order traversal to find the last node*/
+	if (!root)
+		return (NULL);
 
 	enqueue(&front, &rear, root);
 	while (front)
@@ -36,12 +36,12 @@ heap_t *get_last_node(heap_t *root)
  */
 void heapify_down(heap_t *root)
 {
-	if (!root)
-		return;
-
 	heap_t *largest = root;
 	heap_t *left = root->left;
 	heap_t *right = root->right;
+
+	if (!root)
+		return;
 
 	/*find the largest among root, left child, and right child*/
 	if (left && left->n > largest->n)
