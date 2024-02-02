@@ -1,5 +1,8 @@
 #include "binary_trees.h"
 
+binary_tree_t *_binary_tree_rotate_left(binary_tree_t *tree);
+binary_tree_t *_binary_tree_rotate_right(binary_tree_t *tree);
+
 /**
   * binary_tree_balance - a function that measures the balance
   * factor of a binary tree
